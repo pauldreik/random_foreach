@@ -8,7 +8,6 @@
  * License: Boost 1.0
  * SPDX-License-Identifier: BSL-1.0
  */
-#include "popcount.h"
 #include <cassert>
 #include <functional>
 #include <random>

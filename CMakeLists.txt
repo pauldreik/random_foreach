@@ -9,8 +9,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mavx2 -maes -msha -mbmi2 
 # performance testing
 add_executable(shootout
     shootout.cpp
-    popcount.h
-    popcount.cpp
     LazyFisherYates.h
     AesFunc.h
     ShaFeistel.h
