@@ -5,6 +5,8 @@ This code was developed and eventually lead to a
 talk on Stockholm Cpp 20200123. Slides are available [here](https://www.pauldreik.se/talks/20200123_crypto/)
 
 The idea is to generate all numbers in a range in a random order exactly once, by using a block cipher.
+Because the use is not cryptographic, the block cipher can be optimized for speed rather than security. Also, it is
+difficult to find a block cipher with arbritrary block size, chosen at runtime.
 
 The block cipher uses a Feistel ceipher. A CRTP base class is used, so one can focus less on Feistel and more on the rounding function which is what makes the difference between the ciphers.
 
@@ -22,7 +24,13 @@ You need perf to run the benchmark program, and
 allow for perf to record. Counting cycles has
 less variation than measuring execution time.
 
+You may encounter runtime errors for some of the results if your CPU does not support the instructions needed:
+
+ - aes (any recent 64 bit x86 cpu works)
+ - sha (rare to find support, I have not tested this, only written the code)
+
 As root:
+
     echo 2 >/proc/sys/kernel/perf_event_paranoid
 
 As a normal user:
