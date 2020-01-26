@@ -1,9 +1,9 @@
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 
 #include "Fnv1aCiphers.h"
 #include <cstdint>
@@ -11,9 +11,9 @@
 #include <random>
 
 /*
-  * Example of generating random numbers, suitable to feed
-  * into a random number statistics program
-  *
+ * Example of generating random numbers, suitable to feed
+ * into a random number statistics program
+ *
  */
 int
 main()

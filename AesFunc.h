@@ -1,9 +1,9 @@
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 #pragma once
 
 #include <cstdint>
@@ -23,7 +23,8 @@ public:
   static constexpr int ROUNDS = ROUNDS_;
   using Base = GenericFeistel<Aes32<ROUNDS>, std::uint32_t, std::uint16_t>;
   explicit Aes32(int Nbits)
-    : Base(Nbits){}
+    : Base(Nbits)
+  {}
 
   template<typename URBG>
   void seed(URBG& urbg)

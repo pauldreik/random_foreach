@@ -1,11 +1,11 @@
 #pragma once
 
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 
 #include <cstdint>
 #include <immintrin.h> // intrinsics for sha
@@ -25,7 +25,8 @@ public:
   using Base =
     GenericFeistel<ShaFeistel32<ROUNDS>, std::uint32_t, std::uint16_t>;
   explicit ShaFeistel32(int Nbits)
-    : Base(Nbits){}
+    : Base(Nbits)
+  {}
 
   template<typename URBG>
   void seed(URBG& urbg)

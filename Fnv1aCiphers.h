@@ -1,14 +1,14 @@
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 #pragma once
 
 #include "GenericFeistel.h"
-#include <cstdint>
 #include <array>
+#include <cstdint>
 
 namespace {
 /**
@@ -27,7 +27,7 @@ hashfnv1a(const std::uint16_t value)
   }
   // fold the 32 bit hash into 16 by xoring the halves, as the authors
   // of fnv1a recommend.
-  return hash ^ (hash>>16);
+  return hash ^ (hash >> 16);
 }
 
 std::uint32_t
@@ -59,7 +59,8 @@ public:
   static constexpr int ROUNDS = 2;
   using Base = GenericFeistel<Dynamic32, std::uint32_t, std::uint16_t>;
   explicit Dynamic32(int Nbits)
-    : Base(Nbits){}
+    : Base(Nbits)
+  {}
 
   template<typename URBG>
   void seed(URBG&& urbg)
@@ -89,7 +90,8 @@ public:
   static constexpr int ROUNDS = 2;
   using Base = GenericFeistel<Dynamic64, std::uint64_t, std::uint32_t>;
   explicit Dynamic64(int Nbits)
-    : Base(Nbits){}
+    : Base(Nbits)
+  {}
   template<typename URBG>
   void seed(URBG&& urbg)
   {

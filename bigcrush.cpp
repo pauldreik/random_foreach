@@ -1,11 +1,11 @@
 /*
  * runs the small/big-crush statistical tests
  *
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 #include "GenericFeistel.h"
 #include "PlaygroundFeistel.h"
 #include <cstdint>
@@ -41,7 +41,7 @@ main()
   unif01_Gen* gen = unif01_CreateExternGenBits(name.data(), doit);
 
   // Run the tests.
-//  bbattery_SmallCrush(gen);
+  //  bbattery_SmallCrush(gen);
   bbattery_BigCrush(gen);
 
   // Clean up.

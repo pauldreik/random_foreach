@@ -1,10 +1,10 @@
 #pragma once
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 #include <immintrin.h>
 
 #include "GenericFeistel.h"
@@ -102,9 +102,9 @@ operator==(const ManyU32& a, const ManyU32& b) noexcept
 static ManyU32
 hashfnv1a(ManyU32 value) noexcept
 {
-    // some possible ways to speed this up:
-    // cache the constants outside.
-    // unroll the loop manually
+  // some possible ways to speed this up:
+  // cache the constants outside.
+  // unroll the loop manually
   const ManyU32 prime{ 0x1000193 };
   const ManyU32 lastbytemask{ 0xFF };
 

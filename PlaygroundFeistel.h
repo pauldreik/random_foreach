@@ -1,9 +1,9 @@
 /*
-* By Paul Dreik 2019,2020
-* https://www.pauldreik.se/
-* License: Boost 1.0
-* SPDX-License-Identifier: BSL-1.0
-*/
+ * By Paul Dreik 2019,2020
+ * https://www.pauldreik.se/
+ * License: Boost 1.0
+ * SPDX-License-Identifier: BSL-1.0
+ */
 #pragma once
 
 #include <array>
@@ -133,8 +133,6 @@ public:
     94  HammingCorr, L = 1200          1 - 3.7e-11
     m_selector = { AES, FN1VA, CRC32 };
     */
-
-
   }
 
   template<typename URBG>

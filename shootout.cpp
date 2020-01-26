@@ -10,33 +10,30 @@
  */
 #include <cassert>
 #include <functional>
+#include <memory>
 #include <random>
 #include <string>
 #include <vector>
-#include <memory>
 
 #include "AesFunc.h"
+#include "Fnv1aCiphers.h"
 #include "GenericFeistel.h"
 #include "LazyFisherYates.h"
 #include "PlaygroundFeistel.h"
 #include "ShaFeistel.h"
 #include "XoroFeistel.h"
 #include "simdfeistel.h"
-#include "Fnv1aCiphers.h"
-
-
 
 // empty test function in another translation unit
 void
 donothing(unsigned int);
-
 
 template<typename Integer, typename Callback>
 void
 std_shuffle(Integer N, Callback&& cb)
 {
   std::unique_ptr<Integer[]> storage(new Integer[N]);
-  Integer* v=storage.get();
+  Integer* v = storage.get();
   for (Integer i = 0; i < N; ++i) {
     v[i] = i;
   }
@@ -54,12 +51,11 @@ std_shuffle_vector(Integer N, Callback&& cb)
   for (Integer i = 0; i < N; ++i) {
     v[i] = i;
   }
-  std::shuffle(begin(v), end(v) , std::random_device{});
+  std::shuffle(begin(v), end(v), std::random_device{});
   for (Integer i = 0; i < N; ++i) {
     cb(i);
   }
 }
-
 
 template<typename Integer, typename Callback>
 void
@@ -257,7 +253,7 @@ main(int argc, char* argv[])
 
   auto work = [](auto x) {
 #if 1
-      donothing(x);
+    donothing(x);
 #else
     auto actual = count_set_bits(x);
     auto expected = __builtin_popcount(x);
