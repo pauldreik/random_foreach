@@ -3,7 +3,7 @@ project(feistel)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -maes -std=c++2a -O3 -g")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -maes -std=c++2a  -g")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mavx2 -maes -msha -mbmi2 -std=c++1z -O3 -ggdb -fno-omit-frame-pointer")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mavx2 -maes -msha -mbmi2 -std=c++1z -O3 -ggdb -fno-omit-frame-pointer -DNDEBUG=")
 
 
 # performance testing

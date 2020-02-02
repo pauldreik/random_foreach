@@ -99,27 +99,46 @@ operator==(const ManyU32& a, const ManyU32& b) noexcept
 {
   return ManyU32{ _mm256_cmpeq_epi32(a.m_x, b.m_x) };
 }
+
+// 16 bit fnv1a hash, assuming the input is
+// zero in the most significant bits.
 static ManyU32
-hashfnv1a(ManyU32 value) noexcept
+hashfnv1a_16(ManyU32 value) noexcept
 {
-  // some possible ways to speed this up:
-  // cache the constants outside.
-  // unroll the loop manually
   const ManyU32 prime{ 0x1000193 };
   const ManyU32 lastbytemask{ 0xFF };
 
   ManyU32 hash{ 0x811c9dc5 };
+
+  /*  This is what is supposed to happen:
   for (int shift = 0; shift < 32; shift += 8) {
     hash ^= ((value >> shift) & lastbytemask);
     hash *= prime;
   }
-  return hash;
+   but unroll it manually and remove steps not neccessary
+   because we know we are interested in the bottom 16 bits only
+   and know the upper ones are zero
+  */
+  hash ^= (value & lastbytemask);
+  hash *= prime;
+
+  hash ^= (value >> 8);
+  hash *= prime;
+
+  // there is no 16 bit fnv hash, we fold the halves
+  // onto each other to make it one
+  return hash ^ (hash >> 16);
 }
 
 /**
  * @brief The ParallelFeistel class
  * A try to encrypt multiple values in parallel, using simd, to gain
  * some speed.
+ *
+ * cycles for 2**30 values, skylake:
+ * capto16  9152170408 # incorrect fnv (truncated)
+ * proper16 9462775491 # correct fnv (folded)
+ * aes      9566842315
  */
 class ParallelFeistel : public GenericFeistel<ParallelFeistel, ManyU32, ManyU32>
 {
@@ -139,9 +158,9 @@ public:
     }
   }
 
-  ManyU32 roundFunction(const ManyU32 x, int round) const
+  ManyU32 roundFunction( ManyU32 x, int round) const
   {
-    return hashfnv1a(x) ^ ManyU32 { m_key[round] };
+    return hashfnv1a_16(x) ^ ManyU32 { m_key[round] };
   }
 
 private:
