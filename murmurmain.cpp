@@ -4,10 +4,10 @@
 #include <cassert>
 #include <random>
 
-int
-main()
+// verify the encrypt/decrypt works as intended
+void
+testFixed64()
 {
-
   MurmurCryptFixed64 c;
 
   std::uint64_t count = 0;
@@ -26,4 +26,10 @@ main()
     auto d = c.decrypt(e);
     assert(d == i);
   } while (++count > 0);
+}
+
+int
+main()
+{
+  testFixed64();
 }

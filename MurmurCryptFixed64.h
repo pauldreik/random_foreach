@@ -122,9 +122,9 @@ public:
     Integer ykm1 = 0;
 
 #if __cpp_lib_is_constant_evaluated
-    //if constexpr (std::is_constant_evaluated()) {
+    // if constexpr (std::is_constant_evaluated()) {
     // does not work, "prime is not a constant expression"
-    //static_assert(prime > 2, "avoid edge case");
+    // static_assert(prime > 2, "avoid edge case");
     //}
 #endif
 
@@ -184,4 +184,3 @@ public:
   static constexpr std::uint64_t prime1 = 0xff51afd7ed558ccd;
   static constexpr std::uint64_t prime2 = 0xc4ceb9fe1a85ec53;
 };
-
