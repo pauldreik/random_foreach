@@ -234,6 +234,37 @@ simdfeistel_for_each(Integer M, URBG&& rng, Callback&& cb)
   std::abort();
 }
 
+template<typename Integer, typename URBG, typename Callback>
+void
+simdmurmur_for_each(Integer M, URBG&& rng, Callback&& cb)
+{
+  // how many bits do we need?
+  int bitsneeded = static_cast<int>(std::ceil(std::log2(M)));
+
+  if (bitsneeded <= 32) {
+    SimdMurmur32 cipher(bitsneeded);
+    cipher.seed(rng);
+    ManyU32 II(0, 1, 2, 3, 4, 5, 6, 7);
+    const ManyU32 ones(1);
+    for (Integer count = 0; count < M; II += ones) {
+      auto ea = cipher.encrypt(II).toArray();
+      for (auto encrypted : ea) {
+        if (encrypted < M) {
+          cb(encrypted);
+          ++count;
+          if (count >= M) {
+            return;
+          }
+        }
+      }
+    }
+    return;
+  }
+  std::puts("implement switching to 64 bit");
+  std::abort();
+}
+
+
 int
 main(int argc, char* argv[])
 {
@@ -304,6 +335,9 @@ main(int argc, char* argv[])
 
   functions["murmur"] = [&]() {
     crypto_for_each<Murmur32>(N, std::random_device{}, work);
+  };
+  functions["simdmurmur"] = [&]() {
+    simdmurmur_for_each(N, std::random_device{}, work);
   };
 
   functions["xoro_feistel"] = [&]() {

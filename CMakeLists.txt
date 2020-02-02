@@ -14,7 +14,9 @@ add_executable(shootout
     ShaFeistel.h
     Fnv1aCiphers.h
     simdfeistel.h
-    donothing.cpp)
+    donothing.cpp
+    ManyU32.h
+    murmur32.h)
 
 # statistical testing
 add_executable(binaryrng
