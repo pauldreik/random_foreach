@@ -23,6 +23,7 @@
 #include "ShaFeistel.h"
 #include "XoroFeistel.h"
 #include "simdfeistel.h"
+#include "murmur32.h"
 
 // empty test function in another translation unit
 void
@@ -169,9 +170,9 @@ random_for_each(Integer N, URBG&& rng, Callback&& cb)
  * block cipher based visitation of each integer exactly
  * once
  */
-template<typename Feistel, typename Integer, typename URBG, typename Callback>
+template<typename Crypto, typename Integer, typename URBG, typename Callback>
 void
-feistel_for_each(Integer M, URBG&& rng, Callback&& cb)
+crypto_for_each(Integer M, URBG&& rng, Callback&& cb)
 {
   // how many bits do we need?
   int bitsneeded = static_cast<int>(std::ceil(std::log2(M)));
@@ -180,7 +181,7 @@ feistel_for_each(Integer M, URBG&& rng, Callback&& cb)
   bitsneeded *= 2;
 
   if (bitsneeded <= 32) {
-    Feistel cipher(bitsneeded);
+    Crypto cipher(bitsneeded);
     // auto s=sizeof(cipher);
     cipher.seed(rng);
     Integer count = 0;
@@ -288,24 +289,28 @@ main(int argc, char* argv[])
   functions["std_shuffle_vector"] = [&]() { std_shuffle_vector(N, work); };
 
   functions["fn1va_feistel"] = [&]() {
-    feistel_for_each<Dynamic32>(N, std::random_device{}, work);
+    crypto_for_each<Dynamic32>(N, std::random_device{}, work);
   };
 
   functions["aes_feistel"] = [&]() {
-    feistel_for_each<Aes32<2>>(N, std::random_device{}, work);
+    crypto_for_each<Aes32<2>>(N, std::random_device{}, work);
   };
   functions["aes_feistel_rounds4"] = [&]() {
-    feistel_for_each<Aes32<4>>(N, std::random_device{}, work);
+    crypto_for_each<Aes32<4>>(N, std::random_device{}, work);
   };
   functions["sha1_feistel"] = [&]() {
-    feistel_for_each<ShaFeistel32<2>>(N, std::random_device{}, work);
+    crypto_for_each<ShaFeistel32<2>>(N, std::random_device{}, work);
+  };
+
+  functions["murmur"] = [&]() {
+    crypto_for_each<Murmur32>(N, std::random_device{}, work);
   };
 
   functions["xoro_feistel"] = [&]() {
-    feistel_for_each<XoroFeistel32<2>>(N, std::random_device{}, work);
+    crypto_for_each<XoroFeistel32<2>>(N, std::random_device{}, work);
   };
   functions["playground_feistel"] = [&]() {
-    feistel_for_each<PlaygroundFeistel<2>>(N, std::random_device{}, work);
+    crypto_for_each<PlaygroundFeistel<2>>(N, std::random_device{}, work);
   };
 
   functions["simd_feistel"] = [&]() {
