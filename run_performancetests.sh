@@ -27,7 +27,7 @@ for prog in $($exe --list) ; do
 	#echo -e -n "$cpuname\t$compiler\t$prog\t$size\t" >>$results
 	true /usr/bin/time -f "$cpuname\t$compiler\t$prog\t$size\t%e" \
 		      --output  $results --append \
-		      timeout 20s $exe $prog $((2**$size))
+		      timeout 10s $exe $prog $((2**$size))
 
 	perf stat -x ';' -o tmp $exe $prog $((2**$size))
 	es=$?

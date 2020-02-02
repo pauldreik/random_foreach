@@ -16,12 +16,13 @@ public:
     template<typename URBG>
     void seed(URBG&& rng) {
         for(auto& e: m_keys) {
-            e=rng();
+            e=rng() & m_mask;
         }
     }
 
     std::uint32_t encrypt(std::uint32_t x) const {
     assert( (x & ~mask)==0 && "high bits are set");
+        x ^= m_keys[0];
         x ^= (x>>m_shift);
         //x &= m_mask;
 
