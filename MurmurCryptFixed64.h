@@ -1,21 +1,18 @@
-#ifndef MURMURCRYPT_H
-#define MURMURCRYPT_H
+#pragma once
 
 #include <cassert>
 #include <cstdint>
 #include <initializer_list>
 #include <type_traits>
 /**
- * @brief The MurmurCrypt class
+ * @brief The MurmurCryptFixed64 class
  * Encrypts using the same idea as the murmur crypt is based on.
  * Suggest by Martin Ankerl
  * See https://github.com/pauldreik/random_foreach/issues/4
  */
-class MurmurCrypt
+class MurmurCryptFixed64
 {
 public:
-  MurmurCrypt();
-
   std::uint64_t encrypt_original(std::uint64_t h)
   {
     h ^= h >> 33;
@@ -123,8 +120,13 @@ public:
     Integer yk = 1;
     Integer xkm1 = 1;
     Integer ykm1 = 0;
-    // found by the extended euclid algorithm.
-    static_assert(prime > 2, "avoid edge case");
+
+#if __cpp_lib_is_constant_evaluated
+    //if constexpr (std::is_constant_evaluated()) {
+    // does not work, "prime is not a constant expression"
+    //static_assert(prime > 2, "avoid edge case");
+    //}
+#endif
 
     // count of iterations
     int k = 1;
@@ -183,4 +185,3 @@ public:
   static constexpr std::uint64_t prime2 = 0xc4ceb9fe1a85ec53;
 };
 
-#endif // MURMURCRYPT_H

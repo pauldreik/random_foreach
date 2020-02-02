@@ -1,6 +1,6 @@
 
 
-#include "murmurcrypt.h"
+#include "MurmurCryptFixed64.h"
 #include <cassert>
 #include <random>
 
@@ -8,9 +8,7 @@ int
 main()
 {
 
-  constexpr auto blah = MurmurCrypt::inv_prime(MurmurCrypt::prime1);
-  constexpr auto blah2 = MurmurCrypt::inv_prime(MurmurCrypt::prime2);
-  MurmurCrypt c;
+  MurmurCryptFixed64 c;
 
   std::uint64_t count = 0;
 
@@ -23,8 +21,8 @@ main()
   flip |= rd();
   do {
     auto i = (count + offset) ^ flip;
-    auto e = c.encrypt1(i);
-    assert(e == c.encrypt2(i));
+    auto e = c.encrypt(i);
+    assert(e == c.encrypt_and_debug(i));
     auto d = c.decrypt(e);
     assert(d == i);
   } while (++count > 0);

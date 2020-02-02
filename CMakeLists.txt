@@ -33,4 +33,4 @@ target_link_libraries(runbigcrush
    testu01mylib)
 
 #murmur crypt
-add_executable(mrurmurcrypt murmurmain.cpp murmurcrypt.cpp murmurcrypt.h)
+add_executable(mrurmurcrypt murmurmain.cpp MurmurCryptFixed64.h)
